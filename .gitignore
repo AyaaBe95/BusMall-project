@@ -1,5 +1,13 @@
-# Object file
-*.o
+# Mac OS files
+.DS_Store
 
-# Ada Library Information
-*.ali
+# Logs
+logs
+*.log
+
+
+# Optional eslint cache
+.eslintcache
+
+# Optional eslint cache
+.eslintcache
