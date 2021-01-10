@@ -74,6 +74,19 @@ function countImages(event) {
     }
 }
 
+var button = document.getElementById('showResults');
+function showResults(event) {
+    var ul= document.getElementById('items');
+    for (let index = 0; index < productsArray.length; index++) {
+        if (productsArray[index].vote != 0) {
+            var li = document.createElement('li');
+            li.textContent = productsArray[index].name + " had " + productsArray[index].counter + " votes " + "and was seen " + productsArray[index].views + " times.";
+            ul.appendChild(li);
+        }
+
+    }
+}
+
 // render Image
 function renderImage(leftImage, centerImage, rightImage) {
 
@@ -107,8 +120,11 @@ for (let i = 0; i < images.length; i++) {
 pickImage();
 
 productSection.addEventListener('click', countImages)
+button.addEventListener('click', showResults);
 
-console.log(productsArray)
+
+
+
 
 
 
