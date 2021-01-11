@@ -13,8 +13,12 @@ var centerProductText = document.getElementById('centerh2')
 var rightProductText = document.getElementById('righth2')
 
 var productSection = document.getElementById('allImages')
+var productCanvas = document.getElementById('Chart');
+
 
 var trialsleft = 25;
+
+var shownImages=[];
 
 
 // construction
@@ -26,19 +30,49 @@ function Products(name) {
     productsArray.push(this)
 }
 
+function checkAvailability(selectedproducts){
+    for (let index = 0; index < shownImages.length; index++) {
+        if (shownImages[index].name === selectedproducts) {
+            return true;
+          }
+        
+    }
+    return false;
+
+}
+
 
 // function pick product
 
 function pickImage() {
 
-
+   
 
     do {
-        var leftImage = Math.floor(Math.random() * (productsArray.length - 1))
-        var centerImage = Math.floor(Math.random() * (productsArray.length - 1))
-        var rightImage = Math.floor(Math.random() * (productsArray.length - 1))
-    }
-    while (rightImage === leftImage || rightImage === centerImage || centerImage === leftImage)
+        var leftImage = Math.round(Math.random() * (productsArray.length - 1));
+        var leftproductImageName = productsArray[leftImage].name;    
+      } while (checkAvailability(leftproductImageName ))
+
+    
+      do {
+        var rightImage = Math.round(Math.random() * (productsArray.length - 1));
+        var rightproductImageName = productsArray[rightImage].name;    
+      } while (leftImage === rightImage || checkAvailability(rightproductImageName))
+
+      do {
+        var centerImage = Math.round(Math.random() * (productsArray.length - 1));
+        var centerproductImageName = productsArray[rightImage].name;    
+      } while (leftImage === centerImage || rightImage === centerImage  || checkAvailability(centerproductImageName))
+    
+      shownImages=[];
+
+    shownImages.push(
+        productsArray[leftImage],
+        productsArray[centerImage],
+        productsArray[rightImage]
+    )
+
+    
 
 
 
@@ -71,21 +105,22 @@ function countImages(event) {
     else {
         productSection.removeEventListener('click', countImages);
 
+
     }
 }
 
 var button = document.getElementById('showResults');
 function showResults(event) {
-    var ul= document.getElementById('items');
+    var ul = document.getElementById('items');
     for (let index = 0; index < productsArray.length; index++) {
-        if (productsArray[index].vote != 0) {
-            var li = document.createElement('li');
-            li.textContent = productsArray[index].name + " had " + productsArray[index].counter + " votes " + "and was seen " + productsArray[index].views + " times.";
-            ul.appendChild(li);
-        }
+        var li = document.createElement('li');
+        li.textContent = productsArray[index].name + " had " + productsArray[index].counter + " votes " + "and was seen " + productsArray[index].views + " times.";
+        ul.appendChild(li);
 
     }
 }
+
+
 
 // render Image
 function renderImage(leftImage, centerImage, rightImage) {
@@ -107,6 +142,81 @@ function renderImage(leftImage, centerImage, rightImage) {
     productsArray[rightImage].views++
     productsArray[centerImage].views++
 
+}
+
+var buttonChart = document.getElementById('showChart');
+function renderChart(event) {
+    var arrayOfproductsNames = [];
+    var arrayOfproductsVotes = [];
+    var arrayOfproductsShown =[];
+    
+
+
+    for (let index = 0; index < productsArray.length; index++) {
+        arrayOfproductsNames.push(productsArray[index].name)
+        arrayOfproductsVotes.push(productsArray[index].counter)
+        arrayOfproductsShown.push(productsArray[index].views)
+
+    }
+
+    var myChart = new Chart(productCanvas, {
+        type: 'bar',
+        data: {
+            labels: arrayOfproductsNames,
+            datasets: [
+                {
+                    label: '# of products Clicks',
+                    data: arrayOfproductsVotes, 
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                },
+                {
+                    label: 'Time shown for the products',
+                    data: arrayOfproductsShown, 
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
 
 }
 
@@ -121,6 +231,7 @@ pickImage();
 
 productSection.addEventListener('click', countImages)
 button.addEventListener('click', showResults);
+buttonChart.addEventListener('click',renderChart);
 
 
 
