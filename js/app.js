@@ -249,6 +249,16 @@ function checkAndRestore() {
     }
 }
 
+var buttonStorage = document.getElementById('clearStorage');
+
+function clearStorage(){
+    localStorage.clear();
+
+    productsArray= [];
+    showResults();
+}
+
+
 
 
 
@@ -258,6 +268,7 @@ checkAndRestore();
 productSection.addEventListener('click', countImages)
 button.addEventListener('click', showResults);
 buttonChart.addEventListener('click', renderChart);
+buttonStorage.addEventListener('click', clearStorage);
 
 
 
