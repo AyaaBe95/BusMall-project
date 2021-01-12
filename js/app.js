@@ -17,8 +17,11 @@ var productCanvas = document.getElementById('Chart');
 
 
 var trialsleft = 25;
+var shownImages = [];
 
-var shownImages=[];
+var savedClicks = [];
+var savedViews = [];
+
 
 
 // construction
@@ -28,14 +31,17 @@ function Products(name) {
     this.counter = 0;
     this.views = 0;
     productsArray.push(this)
+
+
 }
 
-function checkAvailability(selectedproducts){
+
+function checkAvailability(selectedproducts) {
     for (let index = 0; index < shownImages.length; index++) {
         if (shownImages[index].name === selectedproducts) {
             return true;
-          }
-        
+        }
+
     }
     return false;
 
@@ -46,35 +52,30 @@ function checkAvailability(selectedproducts){
 
 function pickImage() {
 
-   
 
     do {
         var leftImage = Math.round(Math.random() * (productsArray.length - 1));
-        var leftproductImageName = productsArray[leftImage].name;    
-      } while (checkAvailability(leftproductImageName ))
+        var leftproductImageName = productsArray[leftImage].name;
+    } while (checkAvailability(leftproductImageName))
 
-    
-      do {
+
+    do {
         var rightImage = Math.round(Math.random() * (productsArray.length - 1));
-        var rightproductImageName = productsArray[rightImage].name;    
-      } while (leftImage === rightImage || checkAvailability(rightproductImageName))
+        var rightproductImageName = productsArray[rightImage].name;
+    } while (leftImage === rightImage || checkAvailability(rightproductImageName))
 
-      do {
+    do {
         var centerImage = Math.round(Math.random() * (productsArray.length - 1));
-        var centerproductImageName = productsArray[rightImage].name;    
-      } while (leftImage === centerImage || rightImage === centerImage  || checkAvailability(centerproductImageName))
-    
-      shownImages=[];
+        var centerproductImageName = productsArray[rightImage].name;
+    } while (leftImage === centerImage || rightImage === centerImage || checkAvailability(centerproductImageName))
+
+    shownImages = [];
 
     shownImages.push(
         productsArray[leftImage],
         productsArray[centerImage],
         productsArray[rightImage]
     )
-
-    
-
-
 
     renderImage(leftImage, centerImage, rightImage)
 
@@ -104,22 +105,22 @@ function countImages(event) {
 
     else {
         productSection.removeEventListener('click', countImages);
-
-
+        storeData();
     }
 }
 
 var button = document.getElementById('showResults');
+var ul = document.getElementById('items');
+
 function showResults(event) {
-    var ul = document.getElementById('items');
+    ul.innerHTML='';
     for (let index = 0; index < productsArray.length; index++) {
         var li = document.createElement('li');
         li.textContent = productsArray[index].name + " had " + productsArray[index].counter + " votes " + "and was seen " + productsArray[index].views + " times.";
         ul.appendChild(li);
+    }     
 
-    }
 }
-
 
 
 // render Image
@@ -148,8 +149,8 @@ var buttonChart = document.getElementById('showChart');
 function renderChart(event) {
     var arrayOfproductsNames = [];
     var arrayOfproductsVotes = [];
-    var arrayOfproductsShown =[];
-    
+    var arrayOfproductsShown = [];
+
 
 
     for (let index = 0; index < productsArray.length; index++) {
@@ -166,7 +167,7 @@ function renderChart(event) {
             datasets: [
                 {
                     label: '# of products Clicks',
-                    data: arrayOfproductsVotes, 
+                    data: arrayOfproductsVotes,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -187,7 +188,7 @@ function renderChart(event) {
                 },
                 {
                     label: 'Time shown for the products',
-                    data: arrayOfproductsShown, 
+                    data: arrayOfproductsShown,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -227,11 +228,48 @@ for (let i = 0; i < images.length; i++) {
     new Products(images[i])
 }
 
+
+// storage
+
+//for (i=0 ; i < productsArray.length ; i++){
+//savedClicks[i] +=productsArray[i].counter;
+//savedViews[i] +=productsArray[i].views;
+//}
+
+
+function storeData() {
+    localStorage.setItem('clicksandviews', JSON.stringify(productsArray))
+    //localStorage.setItem('views',JSON.stringify(savedClicks))
+}
+
+function checkAndRestore() {
+    if (localStorage.length > 0) {
+        productsArray = JSON.parse(localStorage.getItem('clicksandviews'));
+
+    }
+}
+
+var buttonStorage = document.getElementById('clearStorage');
+
+function clearStorage(){
+    localStorage.clear();
+
+    productsArray= [];
+    showResults();
+}
+
+
+
+
+
 pickImage();
+checkAndRestore();
 
 productSection.addEventListener('click', countImages)
 button.addEventListener('click', showResults);
-buttonChart.addEventListener('click',renderChart);
+buttonChart.addEventListener('click', renderChart);
+buttonStorage.addEventListener('click', clearStorage);
+
 
 
 
