@@ -48,7 +48,7 @@ function checkAvailability(selectedproducts) {
 }
 
 
-// function pick product
+//  create random images and dont repeat the same images in the following loop
 
 function pickImage() {
 
@@ -90,7 +90,7 @@ function checkProducts(objectIndicator) {
     }
 }
 
-// counting
+// counting clicks
 
 function countImages(event) {
     var targetId = event.target.id;
@@ -123,7 +123,7 @@ function showResults(event) {
 }
 
 
-// render Image
+// render Images 
 function renderImage(leftImage, centerImage, rightImage) {
 
     leftProductImage.setAttribute('src', productsArray[leftImage].url);
@@ -159,6 +159,8 @@ function renderChart(event) {
         arrayOfproductsShown.push(productsArray[index].views)
 
     }
+
+    // creat chart
 
     var myChart = new Chart(productCanvas, {
         type: 'bar',
@@ -231,7 +233,7 @@ for (let i = 0; i < images.length; i++) {
 
 
 
-
+// storing the data in the user`s browser
 function storeData() {
     localStorage.setItem('clicksandviews', JSON.stringify(productsArray))
 }
@@ -244,6 +246,8 @@ function checkAndRestore() {
 }
 
 var buttonStorage = document.getElementById('clearStorage');
+
+// clear the storage when the user click in clear data button
 
 function clearStorage(){
     localStorage.clear();
