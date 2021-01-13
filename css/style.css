@@ -1,50 +1,153 @@
 img{
-    width: 200px;
+    display: flex;
+    align-items: center;
+    height: 180px;
+    width: 220px;
+    background-color: rgb(253, 205, 205);
+    margin: 30px;
+    box-shadow: 5px 10px rgb(245, 144, 144);
+    transition: 10s;
     
 }
 
-body{
-    background-color: rgb(240, 183, 98);
+
+
+.rounding {
+  width: 150px;
+  height: 180px;
+  background-color: #b3b8bb;
+  border-radius: 0;
+  transition: 2s;
+  padding-left: 100px;
+}
+.rounding:hover {
+  transition-property: border-radius, background-color;
+  transition-duration: 0.5s, 0.5s;
+  transition-timing-function: linear, linear;
+
+  border-radius: 50%;
+  background-color: #7c6f6c;
 }
 
+
+ul p{
+padding-top: 15px;
+  font-family: 'Lucida Sans';
+
+}
+body{
+  background-image: linear-gradient(to left, #f778ad, #a2faff);
+}
 header {
-    background: #d5f7da55;
+    background: #38443a55;
   }
   
  nav{
      height: 50px;
      text-align: center;
+     
  }
-  
+
+ nav a{
+  text-decoration: none;
+  color: wheat;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: larger;
   
 
-  section{
-    height: 300px;
+ }
+
+ header nav ul{
+   line-height:50px;
+ }
+
+ .headh1{
+   margin-top: 40px;
+   margin-bottom: 20px;
+   font-family: monospace;
+   font-size: x-large;
+ }
+
+
+  #allImages{
+    height: 250px;
   }
 
-
+  
 button{
-    display: inline;
+    display: inline-block;
     background-color: #f1e8e8; 
     background-color: #f1e8e8; 
     border: salmon solid;
     color: rgb(7, 5, 5);
     padding: 20px 30px;
+    font-family: fantasy;  
+    font-size: medium;
     cursor: pointer;
+    margin-right: 50px;
+    justify-content: space-around;
     
-  }
+}
 
+.buttons1{
+  display: inline-block;
+  padding-left: 90px;
+ 
+  margin-top: 35px;
+  margin-bottom: 10px;
+}
 
   section div {
     float: left;
     padding-top: 30px;
-    padding-left: 175px;
+    padding-left: 90px;
+    padding-right: 90px;
     
   }
 
  
+  .showdata{
+    height: fit-content;
+  }
+  
+  
+
+ 
   h1{
       text-align: center;
+        
+  }
+
+  @keyframes blinkAnimation {
+    0% {
+      color: #c20693;
+    }
+    50% {
+      color: #1a1616;
+    }
+    100% {
+      color: #fca7a7;
+    }
+  }
+
+  .blink {
+    animation-name: blinkAnimation;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in;
+    animation-duration: 650ms;
+  }
+  
+
+  div ol {
+    list-style-type: square;
+
+  }
+  div ol li{
+    background-color: wheat;
+    font-family: monospace;
+    font-size: large;
+
+
   }
 
   div li{
@@ -52,16 +155,34 @@ button{
     font-size: 1em;
     padding-left: 5px
   }
-  div ol{
-    list-style: circle;
-
-  }
+  
 
   nav li{
     display: inline;
-    padding-left: 30px;
+    align-items: center;
+    margin: 35px;
+ }
 
-  }
+ .doNothing {
+  opacity: .7; 
+  transition: opacity 50ms linear;
+}
+
+.doNothing:active {
+  transition-property: outline;
+  transition-duration: 50ms;
+  transition-timing-function: linear;
+  outline: 2px solid rgb(34, 1, 27);
+}
+
+.doNothing:hover {
+  transition-property: opacity;
+  transition-duration: .2s;
+  transition-timing-function: linear;
+  opacity: 1.0;
+}
+  
+  
   
  
   

@@ -229,17 +229,11 @@ for (let i = 0; i < images.length; i++) {
 }
 
 
-// storage
 
-//for (i=0 ; i < productsArray.length ; i++){
-//savedClicks[i] +=productsArray[i].counter;
-//savedViews[i] +=productsArray[i].views;
-//}
 
 
 function storeData() {
     localStorage.setItem('clicksandviews', JSON.stringify(productsArray))
-    //localStorage.setItem('views',JSON.stringify(savedClicks))
 }
 
 function checkAndRestore() {
